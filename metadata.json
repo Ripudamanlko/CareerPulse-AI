@@ -1,0 +1,5 @@
+{
+  "name": "CareerPulse AI",
+  "description": "A resume analyzer that visualizes skill gaps, matches profiles to job descriptions, and provides ATS/SEO optimization suggestions.",
+  "requestFramePermissions": []
+}
