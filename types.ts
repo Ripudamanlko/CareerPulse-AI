@@ -11,6 +11,19 @@ export interface RewriteSuggestion {
   reasoning: string;
 }
 
+export interface CareerPreferences {
+  targetRole: string;
+  preferredWorkMode: 'On-site' | 'Hybrid' | 'Remote';
+  targetRegion: string;
+  aiAssistiveTooling: 'Minimal' | 'Balanced' | 'Advanced';
+}
+
+export interface ActionPlanItem {
+  timeframe: 'This Week' | 'This Month' | 'This Quarter';
+  action: string;
+  expectedImpact: string;
+}
+
 export interface AnalysisResult {
   matchScore: number;
   summary: string;
@@ -18,11 +31,15 @@ export interface AnalysisResult {
   softSkills: SkillPoint[];
   missingKeywords: string[];
   suggestions: RewriteSuggestion[];
+  marketSignals: string[];
+  interviewFocus: string[];
+  actionPlan: ActionPlanItem[];
 }
 
 export interface InputState {
   resumeText: string;
   jobDescription: string;
+  preferences: CareerPreferences;
 }
 
 export enum AppStatus {

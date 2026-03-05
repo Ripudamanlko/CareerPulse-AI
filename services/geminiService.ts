@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
-import { AnalysisResult } from "../types";
+import { AnalysisResult, CareerPreferences } from "../types";
 
 const apiKey = process.env.API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
@@ -54,31 +54,60 @@ const analysisSchema: Schema = {
         },
       },
     },
+    marketSignals: {
+      type: Type.ARRAY,
+      items: { type: Type.STRING },
+      description: "3-5 concise trends relevant to hiring expectations in 2026 for this role.",
+    },
+    interviewFocus: {
+      type: Type.ARRAY,
+      items: { type: Type.STRING },
+      description: "3-5 interview talking points the candidate should prepare.",
+    },
+    actionPlan: {
+      type: Type.ARRAY,
+      items: {
+        type: Type.OBJECT,
+        properties: {
+          timeframe: { type: Type.STRING, description: "One of: This Week, This Month, This Quarter" },
+          action: { type: Type.STRING },
+          expectedImpact: { type: Type.STRING },
+        },
+      },
+      description: "Prioritized resume/job-search improvements split by timeframe.",
+    },
   },
-  required: ["matchScore", "summary", "technicalSkills", "softSkills", "missingKeywords", "suggestions"],
+  required: ["matchScore", "summary", "technicalSkills", "softSkills", "missingKeywords", "suggestions", "marketSignals", "interviewFocus", "actionPlan"],
 };
 
-export const analyzeResume = async (resumeText: string, jobDescription: string): Promise<AnalysisResult> => {
+export const analyzeResume = async (resumeText: string, jobDescription: string, preferences: CareerPreferences): Promise<AnalysisResult> => {
   if (!apiKey) {
     throw new Error("API Key is missing. Please check your environment configuration.");
   }
 
   const prompt = `
     You are an expert Career Coach and ATS (Applicant Tracking System) Specialist.
-    
+
     Please analyze the following Resume text against the provided Job Description.
-    
+
     RESUME TEXT:
     ${resumeText}
 
     JOB DESCRIPTION:
     ${jobDescription}
 
+    CANDIDATE PREFERENCES:
+    - Target Role: ${preferences.targetRole}
+    - Preferred Work Mode: ${preferences.preferredWorkMode}
+    - Target Region: ${preferences.targetRegion}
+    - AI Tooling Comfort: ${preferences.aiAssistiveTooling}
+
     Task:
     1. Evaluate the match percentage.
     2. Extract key technical and soft skills, rating the candidate's evident proficiency vs. the job's requirement importance.
     3. Identify missing keywords that would hurt the candidate's ranking in an ATS.
     4. Provide concrete rewriting suggestions to improve the resume's impact, focusing on "Show, Don't Tell", using numbers, and embedding keywords naturally.
+    5. Add 2026-specific market signals, interview focus points, and a practical action plan.
   `;
 
   try {
@@ -94,7 +123,7 @@ export const analyzeResume = async (resumeText: string, jobDescription: string):
 
     const text = response.text;
     if (!text) {
-        throw new Error("Empty response from AI");
+      throw new Error("Empty response from AI");
     }
     return JSON.parse(text) as AnalysisResult;
   } catch (error) {
