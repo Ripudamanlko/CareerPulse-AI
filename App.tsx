@@ -3,18 +3,18 @@ import { InputForm } from './components/InputForm';
 import { ResultsDashboard } from './components/ResultsDashboard';
 import { analyzeResume } from './services/geminiService';
 import { AnalysisResult, AppStatus, InputState } from './types';
-import { LineChart, Github, Sparkles } from 'lucide-react';
+import { LineChart, Sparkles } from 'lucide-react';
 
 const App: React.FC = () => {
   const [status, setStatus] = useState<AppStatus>(AppStatus.IDLE);
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleAnalysis = async ({ resumeText, jobDescription }: InputState) => {
+  const handleAnalysis = async ({ resumeText, jobDescription, preferences }: InputState) => {
     setStatus(AppStatus.ANALYZING);
     setError(null);
     try {
-      const data = await analyzeResume(resumeText, jobDescription);
+      const data = await analyzeResume(resumeText, jobDescription, preferences);
       setResult(data);
       setStatus(AppStatus.COMPLETE);
     } catch (err: any) {
@@ -63,7 +63,7 @@ const App: React.FC = () => {
                     Paste your resume and job description to get instant feedback, skill gap analysis, and SEO-optimized rewrite suggestions.
                   </p>
               </div>
-              <InputForm onAnalyze={handleAnalysis} isLoading={false} />
+              <InputForm onAnalyze={handleAnalysis} isLoading={status === AppStatus.ANALYZING} />
            </div>
         )}
 
@@ -74,7 +74,7 @@ const App: React.FC = () => {
                 <div className="absolute top-0 left-0 w-full h-full border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
              </div>
              <h3 className="text-xl font-semibold text-slate-800">Analyzing Profile...</h3>
-             <p className="text-slate-500 mt-2">Extracting skills, checking keywords, and calculating match score.</p>
+             <p className="text-slate-500 mt-2">Mapping skills, forecasting 2026 market signals, and building an action plan.</p>
           </div>
         )}
 

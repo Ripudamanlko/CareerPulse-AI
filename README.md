@@ -18,3 +18,10 @@ View your app in AI Studio: https://ai.studio/apps/drive/1IJiwEXQcSrzmuRAc4a6sVm
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+
+## What's new for 2026-ready job apps
+
+- Career context capture (target role, work mode, region, and AI tooling comfort) before analysis.
+- AI output now includes 2026 market signals, interview focus topics, and a practical action plan.
+- Expanded dashboard section for interview readiness and short/medium-term execution steps.
