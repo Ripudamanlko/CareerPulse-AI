@@ -58,7 +58,7 @@ const analysisSchema: Schema = {
   required: ["matchScore", "summary", "technicalSkills", "softSkills", "missingKeywords", "suggestions"],
 };
 
-export const analyzeResume = async (resumeText: string, jobDescription: string): Promise<AnalysisResult> => {
+export const analyzeResume = async (resumeText: string, jobDescription: string, additionalLinks?: string, referenceProfile?: string): Promise<AnalysisResult> => {
   if (!apiKey) {
     throw new Error("API Key is missing. Please check your environment configuration.");
   }
@@ -74,11 +74,19 @@ export const analyzeResume = async (resumeText: string, jobDescription: string):
     JOB DESCRIPTION:
     ${jobDescription}
 
+    ${additionalLinks ? `ADDITIONAL LINKS & RESOURCES (LinkedIn, GitHub, Portfolio, Research, Publications):
+    ${additionalLinks}` : ''}
+
+    ${referenceProfile ? `REFERENCE PROFILE / BENCHMARK (The person being replaced, a top candidate, or Hiring Manager profile):
+    ${referenceProfile}` : ''}
+
     Task:
     1. Evaluate the match percentage.
     2. Extract key technical and soft skills, rating the candidate's evident proficiency vs. the job's requirement importance.
     3. Identify missing keywords that would hurt the candidate's ranking in an ATS.
     4. Provide concrete rewriting suggestions to improve the resume's impact, focusing on "Show, Don't Tell", using numbers, and embedding keywords naturally.
+    5. If additional links (GitHub, Hugging Face, Research papers, etc.) are provided, incorporate their value into the match score and summary. For AI/ML/Researcher roles, heavily weigh publications and open-source contributions.
+    6. If a REFERENCE PROFILE is provided, benchmark the candidate against it. Provide reasoning on where this person stands compared to the benchmark. Mention specific arguments for why they are a good replacement or how they align with the Hiring Manager's expectations.
   `;
 
   try {

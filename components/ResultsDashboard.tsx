@@ -9,86 +9,86 @@ interface ResultsDashboardProps {
 
 export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({ result }) => {
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-6 animate-fade-in">
+    <div className="w-full max-w-7xl mx-auto space-y-8 animate-fade-in">
       
       {/* Header Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Overall Score */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Overall Fit</h3>
+        <div className="mac-card p-8 flex flex-col justify-between">
+          <h3 className="text-sm font-bold uppercase tracking-widest text-[#0A192F]/40 mb-6">Match Precision</h3>
           <ScoreGauge score={result.matchScore} />
-          <p className="text-center text-sm text-slate-500 mt-4 px-4">{result.summary}</p>
+          <p className="text-center text-sm text-[#0A192F]/60 mt-6 px-4 font-medium leading-relaxed">{result.summary}</p>
         </div>
 
         {/* Skill Balance Radar */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 md:col-span-2">
-            <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-semibold text-slate-800">Skill Topology</h3>
-                <span className="text-xs font-medium px-2 py-1 bg-indigo-50 text-indigo-600 rounded-full">Tech vs Soft Skills</span>
+        <div className="mac-card p-8 md:col-span-2">
+            <div className="flex justify-between items-center mb-6">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-[#0A192F]/40">Skill Topology</h3>
+                <span className="text-[10px] font-bold px-2 py-1 bg-blue-900/5 text-blue-900/60 rounded uppercase tracking-wider border border-blue-900/5">Multidimensional View</span>
             </div>
             <MatchRadar skills={[...result.technicalSkills, ...result.softSkills]} />
         </div>
       </div>
 
       {/* Detailed Skill Analysis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-            <h3 className="text-lg font-semibold text-slate-800 border-b border-slate-100 pb-2">Technical Proficiency</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="mac-card p-8">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-[#0A192F]/40 border-b border-blue-900/5 pb-4 mb-6">Technical Proficiency</h3>
             <SkillBarChart skills={result.technicalSkills} type="Tech" />
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-            <h3 className="text-lg font-semibold text-slate-800 border-b border-slate-100 pb-2">Soft Skill Alignment</h3>
+        <div className="mac-card p-8">
+            <h3 className="text-sm font-bold uppercase tracking-widest text-[#0A192F]/40 border-b border-blue-900/5 pb-4 mb-6">Soft Skill Alignment</h3>
             <SkillBarChart skills={result.softSkills} type="Soft" />
         </div>
       </div>
 
       {/* SEO & Keywords */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-            <div className="flex items-center space-x-2 mb-4">
-                <AlertCircle className="w-5 h-5 text-amber-500" />
-                <h3 className="text-lg font-semibold text-slate-800">Missing Keywords</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-1 mac-card p-8">
+            <div className="flex items-center space-x-2 mb-6">
+                <Search className="w-4 h-4 text-[#0A192F]/40" />
+                <h3 className="text-sm font-bold uppercase tracking-widest text-[#0A192F]/40">Keyword Delta</h3>
             </div>
-            <p className="text-sm text-slate-500 mb-4">Add these exact terms to improve ATS ranking:</p>
+            <p className="text-xs text-[#0A192F]/40 font-bold uppercase tracking-wider mb-6">Optimization Targets:</p>
             <div className="flex flex-wrap gap-2">
                 {result.missingKeywords.map((kw, idx) => (
-                    <span key={idx} className="px-3 py-1 bg-red-50 text-red-600 text-sm font-medium rounded-full border border-red-100">
+                    <span key={idx} className="px-3 py-1.5 bg-blue-900/5 text-blue-900/80 text-[11px] font-bold rounded-lg border border-blue-900/5 uppercase tracking-wider">
                         {kw}
                     </span>
                 ))}
                 {result.missingKeywords.length === 0 && (
-                    <span className="text-green-600 text-sm flex items-center">
-                        <CheckCircle2 className="w-4 h-4 mr-1" /> Great job! No critical keywords missing.
+                    <span className="text-blue-900/60 text-sm flex items-center font-medium">
+                        <CheckCircle2 className="w-4 h-4 mr-2 text-[#0A192F]" /> Optimization complete.
                     </span>
                 )}
             </div>
         </div>
 
         {/* Suggestions List */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-            <div className="flex items-center space-x-2 mb-6">
-                <TrendingUp className="w-5 h-5 text-indigo-500" />
-                <h3 className="text-lg font-semibold text-slate-800">Optimization Suggestions</h3>
+        <div className="lg:col-span-2 mac-card p-8">
+            <div className="flex items-center space-x-2 mb-8">
+                <TrendingUp className="w-4 h-4 text-[#0A192F]/40" />
+                <h3 className="text-sm font-bold uppercase tracking-widest text-[#0A192F]/40">Refinement Logic</h3>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
                 {result.suggestions.map((suggestion, idx) => (
-                    <div key={idx} className="group border border-slate-100 rounded-lg p-4 hover:border-indigo-100 hover:bg-slate-50 transition-colors">
-                        <div className="flex justify-between items-start mb-2">
-                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{suggestion.section}</span>
+                    <div key={idx} className="group border border-blue-900/5 rounded-2xl p-6 hover:bg-blue-900/[0.02] transition-all duration-300">
+                        <div className="flex justify-between items-start mb-4">
+                            <span className="text-[10px] font-black text-[#0A192F]/20 uppercase tracking-[0.2em]">{suggestion.section}</span>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-1">
-                                <p className="text-xs text-red-500 font-semibold">Original</p>
-                                <p className="text-sm text-slate-600 italic border-l-2 border-red-200 pl-2">"{suggestion.originalText}"</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-2">
+                                <p className="text-[10px] text-[#0A192F]/30 font-bold uppercase tracking-widest">Current State</p>
+                                <p className="text-sm text-[#0A192F]/50 italic font-medium leading-relaxed">"{suggestion.originalText}"</p>
                             </div>
-                            <div className="space-y-1">
-                                <p className="text-xs text-green-600 font-semibold">Optimized</p>
-                                <p className="text-sm text-slate-800 font-medium border-l-2 border-green-400 pl-2">"{suggestion.improvedText}"</p>
+                            <div className="space-y-2">
+                                <p className="text-[10px] text-[#0A192F] font-bold uppercase tracking-widest">Recommended State</p>
+                                <p className="text-sm text-[#0A192F] font-semibold leading-relaxed">"{suggestion.improvedText}"</p>
                             </div>
                         </div>
-                        <div className="mt-3 text-xs text-indigo-600 bg-indigo-50 inline-block px-2 py-1 rounded">
-                            💡 {suggestion.reasoning}
+                        <div className="mt-6 text-[11px] font-bold text-[#0A192F]/60 bg-blue-900/5 inline-block px-3 py-1.5 rounded-lg border border-blue-900/5">
+                            RATIONALE: {suggestion.reasoning}
                         </div>
                     </div>
                 ))}

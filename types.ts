@@ -23,6 +23,8 @@ export interface AnalysisResult {
 export interface InputState {
   resumeText: string;
   jobDescription: string;
+  additionalLinks?: string;
+  referenceProfile?: string;
 }
 
 export enum AppStatus {
